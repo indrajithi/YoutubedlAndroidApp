@@ -41,17 +41,34 @@ export default function App() {
               height: 40,
               borderColor: "gray",
               borderWidth: 1,
+              padding: 10,
+              minWidth: "70%",
             } }
+            placeholder="Enter a youtube URL"
+            autoFocus
+            value={ url }
             onChangeText={ (text) => setUrl(text) }
           />
+          <View
+          style={ { 
+            paddingTop: 8,
+            borderRadius: 4,
+            marginHorizontal: "1%",
+            marginBottom: 6,
+            marginTop: 10,
+            textAlign: "center"}}>
           <Button
             title="Get download links"
+            color="forestgreen"
             onPress={ () => fetchVideoInfo() }
           />
+          </View>
+          
           { isLoading ? (
             <ActivityIndicator />
           ) : (
             <FlatList
+              style={ { padding: 10 } }
               data={ data }
               keyExtractor={ ({ format_id }) => format_id }
               renderItem={ ({ item }) => (
@@ -71,10 +88,16 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    paddingTop: 10,
+  },
+
   container: {
     flex: 1,
     padding: 25,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: "30%",
+    backgroundColor: 'blue'
   },
 });

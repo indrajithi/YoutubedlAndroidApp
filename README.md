@@ -1,6 +1,6 @@
 # Youtube Download Android App
 
-![screenshot](/Screenshot_20211213-001613.jpg)
+<img src="demo.png" alt="demo" style="width:300px;"/>
 
 ## Development Setup
 

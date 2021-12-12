@@ -81,7 +81,7 @@ Feb 4 08:31:58 turtle[48488] INFO:  it's all set!
 File: keystore.jks
 Keystore Password: keystorepassword
 Keystore Key Alias: keyalias
-Keystore Key Password: keypasswor
+Keystore Key Password: keypassword
 ```
 
 ### Build APK
@@ -89,11 +89,11 @@ Keystore Key Password: keypasswor
 Make sure that you are serving the dist directory on http://127.0.0.1:8000 as explained above in Run a local server. Assuming you are using bash as your shell, from the root of your project, run:
 
 ```
-EXPO_ANDROID_KEYSTORE_PASSWORD="keystorepassword" \
-EXPO_ANDROID_KEY_PASSWORD="keypassword" \
+EXPO_ANDROID_KEYSTORE_PASSWORD="root123" \
+EXPO_ANDROID_KEY_PASSWORD="root123" \
 turtle build:android \
   --type apk \
-  --keystore-path ./should-be-private/keystore.jks \
+  --keystore-path ./.secrets/keystore.jks \
   --keystore-alias "keyalias" \
   --allow-non-https-public-url \
   --public-url http://127.0.0.1:8000/android-index.json

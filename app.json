@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/youtube.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash3.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,13 +22,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/youtube.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "youtube.download.ydld"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/youtube.png"
     }
   }
 }

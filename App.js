@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   ActivityIndicator,
   StyleSheet,
@@ -7,13 +7,13 @@ import {
   StatusBar,
   TouchableHighlight,
   Alert,
-} from "react-native";
+} from "react-native"
 // import responseSample from "./responseSample.json"
 // import { Linking } from "react-native"
-import * as Linking from "expo-linking";
+import * as Linking from "expo-linking"
 
-import Icon from "react-native-vector-icons/FontAwesome";
-import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome"
+import { Button } from "react-native-elements"
 
 const ALLOWED_HOSTS = [
   "www.youtube.com",
@@ -22,71 +22,73 @@ const ALLOWED_HOSTS = [
   "www.youtu.be",
   "m.youtube.com",
   "www.m.youtube.com",
-];
+]
 
 function isValidUrl(string) {
-  const url = Linking.parse(string);
+  if (!string) return false
+  const url = Linking.parse(string)
 
-  if (!ALLOWED_HOSTS.includes(url.hostname)) return false;
+  if (!ALLOWED_HOSTS.includes(url.hostname)) return false
 
-  return url.scheme === "http" || url.scheme === "https";
+  return url.scheme === "http" || url.scheme === "https"
 }
 
 const DowloadList = ({ audio, video, data }) => {
   const getSizeInMegaBytes = (format) => {
-    console.log(format);
-    if (!format) return "";
-    return (format.filesize / 1024 / 1024).toFixed(2).toString() + " MB";
-  };
-  const audioSize = getSizeInMegaBytes(audio);
-  const videoSize = getSizeInMegaBytes(video);
+    console.log(format)
+    if (!format) return ""
+    return (format.filesize / 1024 / 1024).toFixed(2).toString() + " MB"
+  }
+  const audioSize = getSizeInMegaBytes(audio)
+  const videoSize = getSizeInMegaBytes(video)
   return (
     <View style={styles.downloadListContainer}>
       <View style={{ marginBottom: 20 }}>
         <Button
-          title={`Download Audio 4.03 MB${audioSize}`}
+          title={`Download Audio ${audioSize}`}
           type="outline"
           onPress={() => Linking.openURL(audio.url)}
         />
       </View>
       <View>
         <Button
-          title={`Download Video 16.89 MB${videoSize}`}
+          title={`Download Video ${videoSize}`}
           type="outline"
           onPress={() => Linking.openURL(video.url)}
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
 export default function App() {
-  const [url, setUrl] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
-  const [data, setData] = useState();
-  const [audio, setAudio] = useState();
-  const [video, setVideo] = useState();
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [url, setUrl] = useState("")
+  const [isComplete, setIsComplete] = useState(false)
+  const [data, setData] = useState()
+  const [audio, setAudio] = useState()
+  const [video, setVideo] = useState()
+  const [isError, setIsError] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
-  const apiServer = "https://youtube-235.herokuapp.com/download?url=";
+  const apiServer = "https://youtube-235.herokuapp.com/download?url="
   const setAudioVideoDownloads = (formats) => {
     if (formats.length >= 4) {
-      setAudio(formats[3]);
+      setAudio(formats[3])
     }
-    if (formats.length >= 17) {
-      setVideo(formats[16]);
-    }
-    setLoading(false);
-  };
+    setVideo(formats[formats.length - 1])
+    setLoading(false)
+  }
 
   const alertUser = (title, message) =>
-    Alert.alert(title, message, [{ text: "OK" }]);
+    Alert.alert(title, message, [{ text: "OK" }])
 
   const fetchVideoInfo = () => {
-    if (!isValidUrl(url))
-      return alertUser("Invalid URL", "Please enter a valid URL");
-    setLoading(true);
+    if (!isValidUrl(url)) {
+      alertUser("Invalid URL", "Please enter a valid URL")
+      clearEverything()
+      return
+    }
+    setLoading(true)
     if (url.length > 0) {
       return fetch(apiServer + url, {
         method: "GET",
@@ -97,26 +99,27 @@ export default function App() {
       })
         .then((response) => response.json())
         .then((json) => {
-          setData(json.formats);
-          setAudioVideoDownloads(json.formats);
-          setIsComplete(true);
+          setData(json.formats)
+          setAudioVideoDownloads(json.formats)
+          setIsComplete(true)
         })
         .catch(() => {
-          setLoading(false);
-          setIsComplete(true);
-          setIsError(true);
-        });
+          setLoading(false)
+          setIsComplete(true)
+          setIsError(true)
+        })
     }
-  };
+  }
 
   const clearEverything = () => {
-    setUrl("");
-    setData(null);
-    setAudio(null);
-    setVideo(null);
-    setLoading(false);
-    setIsComplete(false);
-  };
+    setUrl('')
+    setData(null)
+    setAudio(null)
+    setVideo(null)
+    setLoading(false)
+    setIsComplete(false)
+    setIsError(false)
+  }
 
   return (
     <View style={styles.container}>
@@ -141,7 +144,7 @@ export default function App() {
             <TouchableHighlight
               style={{ marginTop: 51 }}
               onPress={() => {
-                isComplete ? clearEverything() : fetchVideoInfo();
+                isComplete ? clearEverything() : fetchVideoInfo()
               }}
               underlayColor="transparent"
             >
@@ -184,7 +187,7 @@ export default function App() {
         </View>
       </>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -215,4 +218,4 @@ const styles = StyleSheet.create({
     padding: 30,
     // marginRight:30,
   },
-});
+})
